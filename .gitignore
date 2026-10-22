@@ -1,0 +1,6 @@
+.env
+.env.backup
+.env.production
+/vendor/
+.DS_Store
+Thumbs.db

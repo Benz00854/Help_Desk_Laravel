@@ -1,0 +1,11 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # ให้เข้าถึง assets ใน public/assets ได้โดยตรง
+    RewriteRule ^assets/(.*)$ public/assets/$1 [L]
+
+    # ส่งทุก Request ที่ไม่ใช่ไฟล์จริงไปประมวลผลที่ index.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>

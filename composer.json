@@ -1,0 +1,14 @@
+{
+    "name": "laravel/helpdesk-notification-system",
+    "type": "project",
+    "description": "IT Helpdesk Notification System",
+    "license": "MIT",
+    "require": {
+        "php": "^8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}

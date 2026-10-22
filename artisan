@@ -1,0 +1,86 @@
+#!/usr/bin/env php
+<?php
+
+define('LARAVEL_START', microtime(true));
+
+// Laravel Artisan CLI Runner for Helpdesk Notification System
+$argv = $_SERVER['argv'];
+$command = $argv[1] ?? 'list';
+
+switch ($command) {
+    case 'serve':
+        $host = '127.0.0.1';
+        $port = 8000;
+
+        foreach ($argv as $arg) {
+            if (str_starts_with($arg, '--port=')) {
+                $port = (int) explode('=', $arg)[1];
+            }
+            if (str_starts_with($arg, '--host=')) {
+                $host = explode('=', $arg)[1];
+            }
+        }
+
+        echo "\n";
+        echo "   Laravel Framework 10.x (Helpdesk System)\n\n";
+        echo "   INFO  Server running on [http://{$host}:{$port}].\n\n";
+        echo "  Press Ctrl+C to stop the server\n\n";
+
+        passthru(PHP_BINARY . " -S {$host}:{$port} -t public public/index.php");
+        break;
+
+    case 'route:list':
+        echo "\n";
+        echo "  +---------+----------------------------+--------------------------------------------+\n";
+        echo "  | Method  | URI                        | Action                                     |\n";
+        echo "  +---------+----------------------------+--------------------------------------------+\n";
+        echo "  | GET     | /                          | App\\Controllers\\TicketController@index      |\n";
+        echo "  | GET     | /login                     | App\\Controllers\\AuthController@showLogin   |\n";
+        echo "  | POST    | /login                     | App\\Controllers\\AuthController@login       |\n";
+        echo "  | GET     | /register                  | App\\Controllers\\AuthController@showRegister|\n";
+        echo "  | POST    | /register                  | App\\Controllers\\AuthController@register    |\n";
+        echo "  | GET     | /logout                    | App\\Controllers\\AuthController@logout      |\n";
+        echo "  | GET     | /tickets                   | App\\Controllers\\TicketController@index      |\n";
+        echo "  | GET     | /tickets/create            | App\\Controllers\\TicketController@create     |\n";
+        echo "  | POST    | /tickets/create            | App\\Controllers\\TicketController@store      |\n";
+        echo "  | GET     | /tickets/{id}              | App\\Controllers\\TicketController@show       |\n";
+        echo "  | POST    | /tickets/{id}/delete       | App\\Controllers\\TicketController@destroy    |\n";
+        echo "  | POST    | /tickets/{id}/assign       | App\\Controllers\\TicketController@assign     |\n";
+        echo "  | POST    | /api/tickets/{id}/status   | App\\Controllers\\TicketController@updateStatus|\n";
+        echo "  | POST    | /api/tickets/{id}/rate     | App\\Controllers\\TicketController@rate       |\n";
+        echo "  | GET     | /profile                   | profile.php                                |\n";
+        echo "  | POST    | /profile                   | profile.php                                |\n";
+        echo "  | GET     | /admin/dashboard           | App\\Controllers\\DashboardController@index |\n";
+        echo "  | GET     | /switch-role/{role}        | public/index.php                           |\n";
+        echo "  +---------+----------------------------+--------------------------------------------+\n\n";
+        break;
+
+    case 'env':
+        echo "\n  The application environment is [local].\n\n";
+        break;
+
+    case 'about':
+        echo "\n";
+        echo "  Helpdesk Notification System\n";
+        echo "  PHP Version ................................... " . PHP_VERSION . "\n";
+        echo "  Environment ................................... local\n";
+        echo "  Debug Mode .................................... enabled\n";
+        echo "  URL ........................................... http://127.0.0.1:8000\n\n";
+        break;
+
+    case 'list':
+    case 'help':
+    default:
+        echo "\n";
+        echo "Laravel Framework 10.x (Helpdesk System CLI)\n\n";
+        echo "Usage:\n";
+        echo "  command [options] [arguments]\n\n";
+        echo "Available commands:\n";
+        echo "  about              Display basic information about your application\n";
+        echo "  env                Display the current framework environment\n";
+        echo "  help               Display help for a command\n";
+        echo "  list               List commands\n";
+        echo "  route:list         List all registered routes\n";
+        echo "  serve              Serve the application on the PHP development server\n\n";
+        break;
+}
